@@ -157,30 +157,3 @@ function applyJob(id) {
 renderJobs();
 renderApply();
 
-document.getElementById('saveCV').onclick = () => {
-    const file = cvFile.files[0]; // File baru (jika ada)
-    let data = JSON.parse(localStorage.getItem(LS_CV) || '{}');
-
-    // Update atau isi data
-    data.name = cvName.value.trim();
-    data.email = cvEmail.value.trim();
-    data.skill = cvSkill.value.trim();
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            data.fileData = e.target.result; // Base64 file
-            data.fileName = file.name;
-            localStorage.setItem(LS_CV, JSON.stringify(data));
-            cvPreview.innerHTML = `📄 CV tersimpan: <b>${file.name}</b>`;
-            alert('CV berhasil diperbarui!');
-        };
-        reader.readAsDataURL(file);
-    } else {
-        localStorage.setItem(LS_CV, JSON.stringify(data));
-        cvPreview.innerHTML = data.fileName ? `📄 CV tersimpan: <b>${data.fileName}</b>` : "Belum ada file diunggah.";
-        alert('Data CV berhasil diperbarui tanpa file baru.');
-    }
-
-    modalCV.style.display = 'none';
-};
